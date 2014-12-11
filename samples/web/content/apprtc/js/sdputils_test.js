@@ -24,9 +24,20 @@ var SDP_WITH_AUDIO_CODECS =
      'a=rtpmap:8 PCMA/8000',
     ].join('\r\n');
 
-var SdpUtilsTest = new TestCase('SdpUtilsTest');
+var i = 0;
+function setUp() {
+  i++;
+  i++;
+}
 
-SdpUtilsTest.prototype.testMovesIsac16KToDefaultWhenPreferred = function() {
+function tearDown() {
+  assertEquals(2, i);
+  i--;
+  i--;
+  assertEquals(0, i);
+}
+
+function testMovesIsac16KToDefaultWhenPreferred() {
   var result = maybePreferCodec(SDP_WITH_AUDIO_CODECS, 'audio', 'send',
                                 'iSAC/16000');
   var audioLine = result.split('\r\n')[1];
@@ -35,7 +46,7 @@ SdpUtilsTest.prototype.testMovesIsac16KToDefaultWhenPreferred = function() {
                audioLine);
 };
 
-SdpUtilsTest.prototype.testDoesNothingIfPreferredCodecNotFound = function() {
+function testDoesNothingIfPreferredCodecNotFound() {
   var result = maybePreferCodec(SDP_WITH_AUDIO_CODECS, 'audio', 'send',
                                 'iSAC/123456');
   var audioLine = result.split('\r\n')[1];

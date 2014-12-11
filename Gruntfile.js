@@ -86,13 +86,12 @@ module.exports = function(grunt) {
 
     jstdPhantom: {
       options: {
-        useLatest : true,
-        port: 9876,
+        useLatest: true,
       },
-      files: [
-        "samples/web/content/apprtc/js_test_driver.conf",
-      ]},
+      files: grunt.file.expand('*.conf'),
+    },
   });
+  grunt.log.writeln('Files ' + grunt.file.expand('*.conf'));
 
   // enable plugins
   grunt.loadNpmTasks('grunt-contrib-csslint');
