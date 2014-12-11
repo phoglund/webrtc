@@ -24,17 +24,10 @@ var SDP_WITH_AUDIO_CODECS =
      'a=rtpmap:8 PCMA/8000',
     ].join('\r\n');
 
-var i = 0;
 function setUp() {
-  i++;
-  i++;
 }
 
 function tearDown() {
-  assertEquals(2, i);
-  i--;
-  i--;
-  assertEquals(0, i);
 }
 
 function testMovesIsac16KToDefaultWhenPreferred() {
