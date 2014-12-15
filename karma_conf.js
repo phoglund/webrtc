@@ -3,25 +3,30 @@ module.exports = function(config) {
     frameworks: ['closure'],
     files: [
       // closure base
-      'lib/goog/base.js',
+      // TODO(phoglund): not sure how to import stuff the adapter needs
+      'closure-library/closure/goog/base.js',
+
+      // closure adapter
+      'samples/web/js/karma_adapter.js',
 
       // included files - tests
-      'samples/web/content/**/*.js',
+      'samples/web/content/apprtc/js/*.js',
 
       // source files - these are only watched and served
-      {pattern: 'samples/web/content/**/*.js', included: false},
+      {pattern: 'samples/web/content/apprtc/js/*.js', included: false},
 
       // external deps
-      {pattern: 'lib/goog/deps.js', included: false, served: false}
+      {pattern: 'closure-library/closure/goog/deps.js',
+       included: false, served: false}
     ],
 
     preprocessors: {
       // tests are preprocessed for dependencies (closure) and for iits
-      'samples/web/content/**/*.js': ['closure', 'closure-iit'],
+      'samples/web/content/apprtc/js/*.js': ['closure', 'closure-iit'],
       // source files are preprocessed for dependencies
-      'samples/web/content/**/*.js': ['closure'],
+      'samples/web/content/apprtc/js/*.js': ['closure'],
       // external deps
-      'lib/goog/deps.js': ['closure-deps']
+      'closure-library/closure/goog/deps.js': ['closure-deps']
     }
   });
 };

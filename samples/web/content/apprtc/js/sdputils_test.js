@@ -12,6 +12,8 @@
 
 'use strict';
 
+goog.require('goog.testing.jsunit');
+
 var SDP_WITH_AUDIO_CODECS =
     ['v=0',
      'm=audio 9 RTP/SAVPF 111 103 104 0 9',
@@ -24,9 +26,17 @@ var SDP_WITH_AUDIO_CODECS =
      'a=rtpmap:8 PCMA/8000',
     ].join('\r\n');
 
-var SdpUtilsTest = new TestCase('SdpUtilsTest');
+var i = 0;
+function setUp() {
+  assertEqual(0, i);
+  i++;
+}
 
-SdpUtilsTest.prototype.testMovesIsac16KToDefaultWhenPreferred = function() {
+function tearDown() {
+  assertEqual(0, --i);
+}
+
+function testMovesIsac16KToDefaultWhenPreferred() {
   var result = maybePreferCodec(SDP_WITH_AUDIO_CODECS, 'audio', 'send',
                                 'iSAC/16000');
   var audioLine = result.split('\r\n')[1];
@@ -35,7 +45,7 @@ SdpUtilsTest.prototype.testMovesIsac16KToDefaultWhenPreferred = function() {
                audioLine);
 };
 
-SdpUtilsTest.prototype.testDoesNothingIfPreferredCodecNotFound = function() {
+function testDoesNothingIfPreferredCodecNotFound() {
   var result = maybePreferCodec(SDP_WITH_AUDIO_CODECS, 'audio', 'send',
                                 'iSAC/123456');
   var audioLine = result.split('\r\n')[1];
@@ -44,7 +54,7 @@ SdpUtilsTest.prototype.testDoesNothingIfPreferredCodecNotFound = function() {
                audioLine);
 };
 
-SdpUtilsTest.prototype.testMovesCodecEvenIfPayloadTypeIsSameAsUdpPort = function() {
+function testMovesCodecEvenIfPayloadTypeIsSameAsUdpPort() {
   var result = maybePreferCodec(SDP_WITH_AUDIO_CODECS, 'audio', 'send',
                                 'G722/8000');
   var audioLine = result.split('\r\n')[1];
