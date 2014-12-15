@@ -82,6 +82,9 @@ module.exports = function(grunt) {
       runPythonTests: {
         command: './run_python_tests.sh'
       },
+      prepareJsTests: {
+        command: 'python prepare_js_testing.py'
+      },
     },
 
     jstdPhantom: {
@@ -94,7 +97,7 @@ module.exports = function(grunt) {
       ]},
   });
 
-  // enable plugins
+  // Enable plugins.
   grunt.loadNpmTasks('grunt-contrib-csslint');
   grunt.loadNpmTasks('grunt-htmlhint');
   grunt.loadNpmTasks('grunt-jscs');
@@ -102,9 +105,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-jstestdriver-phantomjs');
 
-  // set default tasks to run when grunt is called without parameters
+  grunt.registerTask('jsUnitTests', 'Execute all javascript unit tests.',
+      function() {
+        grunt.task.run(['shell:prepareJsTests', 'jstdPhantom'])
+      });
+
+  // Set default tasks to run when grunt is called without parameters.
   grunt.registerTask('default', ['csslint', 'htmlhint', 'jscs', 'jshint',
-                     'shell:runPythonTests', 'jstdPhantom']);
+                     'shell:runPythonTests', 'jsUnitTests']);
   // also possible to call JavaScript directly in registerTask()
   // or to call external tasks with grunt.loadTasks()
 };
