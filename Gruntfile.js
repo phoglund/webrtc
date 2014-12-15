@@ -82,8 +82,11 @@ module.exports = function(grunt) {
       runPythonTests: {
         command: './run_python_tests.sh'
       },
-      prepareJsTests: {
-        command: 'python prepare_js_testing.py'
+      setupJsTesting: {
+        command: 'python setup_js_testing.py'
+      },
+      teardownJsTesting: {
+        command: 'python teardown_js_testing.py'
       },
     },
 
@@ -107,7 +110,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('jsUnitTests', 'Execute all javascript unit tests.',
       function() {
-        grunt.task.run(['shell:prepareJsTests', 'jstdPhantom'])
+        grunt.task.run(['shell:setupJsTesting',
+                        'jstdPhantom',
+                        'shell:teardownJsTesting'])
       });
 
   // Set default tasks to run when grunt is called without parameters.
