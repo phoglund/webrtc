@@ -84,6 +84,17 @@ module.exports = function(grunt) {
       },
     },
 
+    karma: {
+      unit: {
+        //options: {
+        //  files: ['samples/web/content/**/*.js'],
+        //},
+        configFile: 'karma_conf.js',
+        singleRun: true,
+        browsers: ['Firefox'],
+      }
+    },
+
     jstdPhantom: {
       options: {
         useLatest : true,
@@ -101,6 +112,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-jstestdriver-phantomjs');
+  grunt.loadNpmTasks('grunt-karma');
 
   // set default tasks to run when grunt is called without parameters
   grunt.registerTask('default', ['csslint', 'htmlhint', 'jscs', 'jshint',
